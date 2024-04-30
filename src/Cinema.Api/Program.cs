@@ -22,7 +22,13 @@ try
     {
         options.Filters.Add<HttpResponseExceptionFilter>();
     });
-    
+
+    builder.Services.AddRouting(options =>
+    {
+        options.LowercaseUrls = true;
+        options.LowercaseQueryStrings = true;
+    });
+
     // Swagger configuration
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

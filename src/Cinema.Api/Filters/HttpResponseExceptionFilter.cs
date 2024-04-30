@@ -36,5 +36,13 @@ public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
             };
             context.ExceptionHandled = true;
         }
+        else if (context.Exception is RecordNotFoundException recordNotFoundException)
+        {
+            context.Result = new ObjectResult(recordNotFoundException.Message)
+            {
+                StatusCode = 404,
+            };
+            context.ExceptionHandled= true;
+        }
     }
 }
