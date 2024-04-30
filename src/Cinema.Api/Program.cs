@@ -1,3 +1,4 @@
+using Cinema.Api.Filters;
 using Cinema.Core;
 using Cinema.Infrastructure;
 using Serilog;
@@ -17,7 +18,10 @@ try
     // Add services to the container.
     builder.Services.ConfigureCore();
     builder.Services.ConfigureInfrastructure();
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add<HttpResponseExceptionFilter>();
+    });
     
     // Swagger configuration
     builder.Services.AddEndpointsApiExplorer();
