@@ -1,10 +1,6 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
 using Cinema.Core.Interfaces;
 
-namespace Cinema.Infrastructure.Data.Repositories
-{
-    public class PsgSpecRepository<T> : RepositoryBase<T>, ISpecRepository<T> where T : class, IAggregateRoot
-    {
-        public PsgSpecRepository(CinemaDbContext dbContext) : base(dbContext) { }
-    }
-}
+namespace Cinema.Infrastructure.Data.Repositories;
+
+public class PsgSpecRepository<T>(CinemaDbContext dbContext) : RepositoryBase<T>(dbContext), ISpecRepository<T> where T : class, IAggregateRoot;

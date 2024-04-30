@@ -1,9 +1,8 @@
 ﻿using Ardalis.Specification;
 
-namespace Cinema.Core.Interfaces
+namespace Cinema.Core.Interfaces;
+
+public interface ISpecRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot
 {
-    public interface ISpecRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot
-    {
-        
-    }
+    
 }

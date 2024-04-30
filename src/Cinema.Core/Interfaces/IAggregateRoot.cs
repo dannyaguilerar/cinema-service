@@ -1,7 +1,6 @@
-﻿namespace Cinema.Core.Interfaces
-{
-    public interface IAggregateRoot
-    {
+﻿namespace Cinema.Core.Interfaces;
 
-    }
+public interface IAggregateRoot
+{
+
 }

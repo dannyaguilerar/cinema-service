@@ -1,12 +1,11 @@
 ﻿using Ardalis.Specification;
 
-namespace Cinema.Core.MoviesAggregate.List
+namespace Cinema.Core.MoviesAggregate.List;
+
+internal class GetMoviesSpecification : Specification<Movie>
 {
-    internal class GetMoviesSpecification : Specification<Movie>
+    public GetMoviesSpecification(int skip, int take)
     {
-        public GetMoviesSpecification(int skip, int take)
-        {
-            Query.Skip(skip).Take(take);            
-        }
+        Query.Skip(skip).Take(take);            
     }
 }

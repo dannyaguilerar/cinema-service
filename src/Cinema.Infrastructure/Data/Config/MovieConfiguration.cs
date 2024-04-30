@@ -2,27 +2,30 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Cinema.Infrastructure.Data.Config
+namespace Cinema.Infrastructure.Data.Config;
+
+public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 {
-    public class MovieConfiguration : IEntityTypeConfiguration<Movie>
+    public const string MOVIE_TABLE_NAME = "movies";
+    public const string MOVIE_PK_NAME = "pk_movie";
+    public const string MOVIE_UQ_TITLE = "uq_movie_title";
+
+    public void Configure(EntityTypeBuilder<Movie> builder)
     {
-        public const string MOVIE_TABLE_NAME = "movies";
-        public const string MOVIE_PK_NAME = "pk_movie";
+        builder.ToTable(MOVIE_TABLE_NAME, schema: DataSchemaConstants.CINEMA_SCHEMA_NAME);
 
-        public void Configure(EntityTypeBuilder<Movie> builder)
-        {
-            builder.ToTable(MOVIE_TABLE_NAME, schema: DataSchemaConstants.CINEMA_SCHEMA_NAME);
+        builder.HasKey(x => x.Id)
+            .HasName(MOVIE_PK_NAME);
+        builder.Property(x => x.Id)
+            .HasDefaultValueSql(DataSchemaConstants.DEFAULT_GUID_FUNCTION);
 
-            builder.HasKey(x => x.Id)
-                .HasName(MOVIE_PK_NAME);
-            builder.Property(x => x.Id)
-                .HasDefaultValueSql(DataSchemaConstants.DEFAULT_GUID_FUNCTION);
+        builder.Property(x => x.Title)
+            .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
+        builder.HasIndex(x => x.Title)
+            .HasDatabaseName(MOVIE_UQ_TITLE)
+            .IsUnique();
 
-            builder.Property(x => x.Title)
-                .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
-
-            builder.Property(x => x.Description)
-                .HasMaxLength(DataSchemaConstants.DEFAULT_DESCRIPTION_LENGTH);
-        }
+        builder.Property(x => x.Description)
+            .HasMaxLength(DataSchemaConstants.DEFAULT_DESCRIPTION_LENGTH);
     }
 }

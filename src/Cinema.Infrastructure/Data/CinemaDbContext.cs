@@ -2,29 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Cinema.Infrastructure.Data
+namespace Cinema.Infrastructure.Data;
+
+public class CinemaDbContext(DbContextOptions<CinemaDbContext> options) : DbContext(options)
 {
-    public class CinemaDbContext : DbContext
+    public DbSet<Movie> Movies { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options)
+        if (!optionsBuilder.IsConfigured)
         {
-            
+            optionsBuilder.UseNpgsql(@"host=localhost;database=cinemadb;user id=postgres;password=postgres;");
         }
+    }
 
-        public DbSet<Movie> Movies { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(@"host=localhost;database=cinemadb;user id=postgres;password=postgres;");
-            }
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
