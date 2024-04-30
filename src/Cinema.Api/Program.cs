@@ -1,3 +1,5 @@
+using Cinema.Core;
+using Cinema.Infrastructure;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -13,6 +15,8 @@ try
     builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
     // Add services to the container.
+    builder.Services.ConfigureCore();
+    builder.Services.ConfigureInfrastructure();
     builder.Services.AddControllers();
     
     // Swagger configuration
