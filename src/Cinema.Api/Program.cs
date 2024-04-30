@@ -3,11 +3,12 @@ using Cinema.Core;
 using Cinema.Infrastructure;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration()
+var logger = Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .WriteTo.Console()
     .CreateLogger();
 
+logger.Information("Starting Cinema Service web host");
 try 
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -53,5 +54,5 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
+    logger.Fatal(ex, "Application terminated unexpectedly");
 }
