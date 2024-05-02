@@ -6,6 +6,6 @@ internal class GetMoviesSpecification : Specification<Movie>
 {
     public GetMoviesSpecification(int skip, int take)
     {
-        Query.Skip(skip).Take(take);            
+        Query.Skip(skip).Take(take);
     }
 }

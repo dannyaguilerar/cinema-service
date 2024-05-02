@@ -7,7 +7,8 @@ public class GetMoviesHandler(ISpecReadRepository<Movie> _moviesSpecReadReposito
 {
     public async Task<GetMoviesResponse> Handle(GetMoviesQuery request, CancellationToken cancellationToken)
     {
-        var list = await _moviesSpecReadRepository.ListAsync(cancellationToken);
-        return new GetMoviesResponse(list);
+        var spec = new GetMoviesSpecification(request.Skip, request.Take);
+        var movies = await _moviesSpecReadRepository.ListAsync(spec, cancellationToken);
+        return new GetMoviesResponse(movies);
     }
 }
